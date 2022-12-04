@@ -5,11 +5,12 @@
 #ifndef INC_5_BINARYTREE_H
 #define INC_5_BINARYTREE_H
 #include "iostream"
-
+#include "binaryFile.h"
 using namespace std;
 
 struct node {
     int key;
+    product info;
     string color;
     node *left = nullptr;
     node *right = nullptr;
@@ -30,21 +31,18 @@ public:
 
     node **GetDuk() { return &duk; }
 
-    void insert(int key);    // Вставляем узел, ключ это значение ключа, внешний интерфейс
+    void insert(product tInfo);    // Вставляем узел, ключ это значение ключа, внешний интерфейс
     void remove(int key); // Удалить ключевой узел
     node *search(int key);
 
     void print();
-
-    void preOrder();    // Предзаказ обхода печати красного черного дерева
-    void inOrder();    // Обход последовательности
-    void postOrder();    // пост-заказ обхода
     void Vyvod(node **w, int l);
 };
 
-void TREE::insert(int key) {
+void TREE::insert(product tInfo) {
     node *t = new node;
-    t->key = key;
+    t->key = tInfo.code;
+    t->info = tInfo;
     t->color = "red";
     if (duk == nullptr) {
         duk = t;
@@ -156,23 +154,23 @@ void TREE::rightRotate(node *&root, node *y) {
 
 void TREE::remove(int key) {
     node*deletenode = search(duk, key);
-    if (deletenode == NULL){
+    if (deletenode == nullptr){
         return;
     }
     node *child, *parent;
     string color;
     // Левый и правый узлы удаленного узла не пусты (не конечные узлы)
-    if (deletenode->left != NULL && deletenode->right != NULL)
+    if (deletenode->left != nullptr && deletenode->right != nullptr)
     {
         node *replace = deletenode;
         // Найти узел-преемник (самый нижний левый узел правого поддерева текущего узла)
         replace = deletenode->right;
-        while (replace->left != NULL)
+        while (replace->left != nullptr)
         {
             replace = replace->left;
         }
         // Случай, когда удаленный узел не является корневым узлом
-        if (deletenode->parent != NULL)
+        if (deletenode->parent != nullptr)
         {
             if (deletenode->parent->left == deletenode)
                 deletenode->parent->left = replace;
@@ -195,7 +193,7 @@ void TREE::remove(int key) {
         else
         {
             // Существование дочернего узла
-            if (child != NULL)
+            if (child != nullptr)
                 child->parent = parent;
             parent->left = child;
 
@@ -213,7 +211,7 @@ void TREE::remove(int key) {
         return;
     }
     // Когда в удаленном узле только левый (правый) узел пуст, найдите дочерний узел удаленного узла
-    if (deletenode->left != NULL)
+    if (deletenode->left != nullptr)
         child = deletenode->left;
     else
         child = deletenode->right;
@@ -245,7 +243,7 @@ void TREE::remove(int key) {
 
 node *TREE::search(node *t, int key) {
 
-    if (t == NULL || t->key == key)
+    if (t == nullptr || t->key == key)
         return t;
     else
     if (key > t->key)
@@ -328,16 +326,16 @@ node *TREE::search(int key) {
 }
 
 void TREE::print() {
-    if (duk == NULL)
+    if (duk == nullptr)
         cout << "empty RBtree\n";
     else
         print(duk);
 }
 
 void TREE::print(node *t) {
-    if (t == NULL)
+    if (t == nullptr)
         return;
-    if (t->parent == NULL)
+    if (t->parent == nullptr)
         cout << t->key << "(" << t->color << ") is root" << endl;
     else if(t->parent->left==t)
     {
@@ -355,7 +353,7 @@ void TREE::Vyvod(node **w, int l)
 // Изображение бинарного дерева, заданного
 // указателем *w на экране дисплея.
 {
-    if (*w != NULL) {
+    if (*w != nullptr) {
         Vyvod(&((**w).right), l + 1);
         for (int i = 1; i <= l; i++) cout << "   ";
         cout << (**w).key << endl;

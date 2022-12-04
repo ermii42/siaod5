@@ -2,19 +2,18 @@
 // Created by user on 04.12.2022.
 //
 
-#ifndef INC_5_TESTTREE_H
-#define INC_5_TESTTREE_H
-
-#include "binaryTree.h"
+#ifndef INC_5_TESTBINTREE_SEARCHSEARCH_H
+#define INC_5_TESTBINTREE_SEARCHSEARCH_H
+#include "binaryTreeSearch.h"
 #include "binaryFile.h"
 
-void testTree() {
+void testBinTreeSearch() {
 
     string fnameBin;
     string fnameText;
     string country;
     product *record = new product();
-    TREE tree;
+    TREE_SEARCH tree;
     int key;
     string line;
     int code;
@@ -76,7 +75,6 @@ void testTree() {
                 }
                 break;
             case 5:
-                tree.print();
                 tree.Vyvod(tree.GetDuk(), 0);
                 break;
             case 6:
@@ -91,4 +89,4 @@ void testTree() {
     } while (choice != -1);
     delete record;
 };
-#endif //INC_5_TESTTREE_H
+#endif //INC_5_TESTBINTREE_SEARCHSEARCH_H
